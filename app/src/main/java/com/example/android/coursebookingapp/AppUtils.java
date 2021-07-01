@@ -22,4 +22,7 @@ public final class AppUtils {
     public static int ADD_COURSE = 6;
     public static int REMOVE_COURSE = 7;
     public static int GET_ALL_COURSES = 8;
+
+    //
+    public static String INSTRUCTION_NAME_EXTRA = "intruction_name";
 }
