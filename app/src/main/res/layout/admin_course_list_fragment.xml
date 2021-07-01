@@ -67,7 +67,6 @@
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
-
     </RelativeLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
