@@ -4,6 +4,7 @@ package com.example.android.coursebookingapp.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.android.coursebookingapp.database.Instructor;
@@ -16,6 +17,8 @@ public interface InstructorDAO {
     @Query("SELECT * FROM instructors")
     List<Instructor> getAll();
 
+    @Query("SELECT COUNT(*) FROM instructors")
+    int count();
     /*
     @Query("SELECT * FROM instructors WHERE id IN (:instructorIds)")
     List<Instructor> loadAllByIds(int[] instructorIds);*/
@@ -29,12 +32,17 @@ public interface InstructorDAO {
             "password LIKE :pWord LIMIT 1")
     Instructor findByUsernameAndPassword(String uName, String pWord);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Instructor... instructors);
 
     @Insert(entity = Instructor.class)
     void insertOneInstructor(Instructor instructor);
 
+    /*
     @Delete
-    void delete(Instructor instructor);
+    void delete(Instructor instructor);*/
+
+    @Query("DELETE FROM instructors WHERE name = :iName AND "+
+            " username = :uName")
+    int delete(String iName,String uName);
 }

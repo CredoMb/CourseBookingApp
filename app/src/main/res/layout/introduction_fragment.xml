@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="32dp"
-    tools:context="com.example.android.coursebookingapp.screens.IntroductionFragment">
+    tools:context="com.example.android.coursebookingapp.screens.mainFragments.IntroductionFragment">
 
     <include
         android:id="@+id/welcome_group"
@@ -37,7 +37,7 @@
             tools:text="Admin" />
 
         <Button
-            android:id="@+id/teacher_button"
+            android:id="@+id/instructors_button"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="130dp"
             android:layout_height="88dp"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login_button_text"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_marginRight="8dp"
             tools:text="Login" />
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="@string/signup_button_text"
             android:textAlignment="center"
-            android:textColor="#000000" />
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

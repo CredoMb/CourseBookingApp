@@ -1,5 +1,6 @@
 package com.example.android.coursebookingapp.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,12 +13,15 @@ public class Instructor {
     public int id;
 
     @ColumnInfo(name = "username")
+    @NonNull
     public String userName;
 
     @ColumnInfo(name = "password")
+    @NonNull
     public String passWord;
 
     @ColumnInfo(name = "name")
+    @NonNull
     public String name_;
 
     public Instructor(String userName,String passWord, String name_){

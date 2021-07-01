@@ -15,6 +15,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
 
+import com.example.android.coursebookingapp.AppUtils;
 import com.example.android.coursebookingapp.R;
 import com.example.android.coursebookingapp.database.Admin;
 import com.example.android.coursebookingapp.database.AdminDAO;
@@ -25,19 +26,8 @@ import com.example.android.coursebookingapp.database.InstructorDAO;
 import com.example.android.coursebookingapp.database.Student;
 import com.example.android.coursebookingapp.database.StudentDAO;
 import com.example.android.coursebookingapp.databinding.LoginSignupFragmentBinding;
-import com.example.android.coursebookingapp.screens.LoginSignupFragmentArgs;
-import com.example.android.coursebookingapp.screens.LoginSignupFragmentDirections;
 
 public class LoginSignupFragment extends Fragment {
-
-    public int ACTION_LOGIN = 1;
-    public int ACTION_SIGNUP = 2;
-
-    public static int  ROLE_ADMIN = 3;
-    public int ROLE_INSTRUCTOR = 4;
-    public int ROLE_STUDENT = 5;
-
-    public String DATA_BASE_NAME = "course_booking_database";
 
     private CourseBookingDataBase db;
 
@@ -62,9 +52,8 @@ public class LoginSignupFragment extends Fragment {
 
 
         // Make an instance of the database
-        // This can be done in the main thread
         db = Room.databaseBuilder(getContext(),
-                CourseBookingDataBase.class, DATA_BASE_NAME).build();
+                CourseBookingDataBase.class, AppUtils.DATA_BASE_NAME).build();
 
         // Initialize all the DAO objects
         adminDAO = db.adminDao();
@@ -80,14 +69,14 @@ public class LoginSignupFragment extends Fragment {
         //loginSignupFragmentArgs.getRole();
         //val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
 
-        if(action == ACTION_LOGIN) {
+        if(action == AppUtils.ACTION_LOGIN) {
             binding.signupLoginButton.setText("Login");
             binding.loginSignupTitle.setText(matchRoleWithHeader(role)+" Login");
 
             // Create the admin account
             // incase it's not already there
             InsertionTask insertionTask = new InsertionTask();
-            insertionTask.execute(ROLE_ADMIN);
+            insertionTask.execute(AppUtils.ROLE_ADMIN);
             // I don't know what to do, fuck
         } else {
             // The confirmation button will be signup
@@ -106,7 +95,26 @@ public class LoginSignupFragment extends Fragment {
         binding.signupLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(action == ACTION_LOGIN){
+                if(action == AppUtils.ACTION_LOGIN){
+
+                    username_ = binding.editUsername.getText().toString();
+                    password_ = binding.editPassword.getText().toString();
+
+                    if(username_.isEmpty() || password_.isEmpty()) {
+                        Toast.makeText(getContext(),"Please make sure to complete the username and the password",Toast.LENGTH_LONG).show();
+                    }else {
+                        RetrieveTask retrieveTask = new RetrieveTask();
+
+                        if(role == AppUtils.ROLE_STUDENT){
+                            retrieveTask.execute(AppUtils.ROLE_STUDENT);
+                        }else if(role == AppUtils.ROLE_INSTRUCTOR){
+                            // Find the element in the
+                            // database
+                            retrieveTask.execute(AppUtils.ROLE_INSTRUCTOR);
+                        } else if(role == AppUtils.ROLE_ADMIN){
+                            retrieveTask.execute(AppUtils.ROLE_ADMIN);
+                        }
+                    }
 
                     username_ = binding.editUsername.getText().toString();
                     password_ = binding.editPassword.getText().toString();
@@ -146,12 +154,12 @@ public class LoginSignupFragment extends Fragment {
 
                         InsertionTask insertionTask = new InsertionTask();
                         // Register a new element
-                        if(role == ROLE_STUDENT){
-                            insertionTask.execute(ROLE_STUDENT);
-                        }else if(role == ROLE_INSTRUCTOR){
+                        if(role == AppUtils.ROLE_STUDENT){
+                            insertionTask.execute(AppUtils.ROLE_STUDENT);
+                        }else if(role == AppUtils.ROLE_INSTRUCTOR){
                             // Insert the new instructor
                             // into the database
-                            insertionTask.execute(ROLE_INSTRUCTOR);
+                            insertionTask.execute(AppUtils.ROLE_INSTRUCTOR);
                         }
                     }
 
@@ -164,9 +172,9 @@ public class LoginSignupFragment extends Fragment {
 
     public String matchRoleWithHeader(int role) {
 
-        if(role == ROLE_ADMIN) {
+        if(role == AppUtils.ROLE_ADMIN) {
             return "Admin";
-        }else if(role == ROLE_STUDENT) {
+        }else if(role == AppUtils.ROLE_STUDENT) {
             return "Student";
         }else{
             return "Instructor";
@@ -179,25 +187,25 @@ public class LoginSignupFragment extends Fragment {
 
             // What happens if we do not find
             // the element in the database ?
-            if(role[0] == ROLE_INSTRUCTOR) {
+            if(role[0] == AppUtils.ROLE_INSTRUCTOR) {
                 Instructor instructor = instructorDAO.findByUsernameAndPassword(username_, password_);
                 if(instructor!=null){
                     name_ = instructor.name_;
                 }
-                return ROLE_INSTRUCTOR;
-            }else if(role[0] == ROLE_STUDENT){
+                return AppUtils.ROLE_INSTRUCTOR;
+            }else if(role[0] == AppUtils.ROLE_STUDENT){
                 Student student = studentDAO.findByUsernameAndPassword(username_, password_);
                 if(student!=null){
                     name_ = student.name_;
                 }
-                return ROLE_STUDENT;
+                return AppUtils.ROLE_STUDENT;
 
-            }else if(role[0] == ROLE_ADMIN){
+            }else if(role[0] == AppUtils.ROLE_ADMIN){
                 Admin admin = adminDAO.findByUsernameAndPassword(username_, password_);
                 if(admin!=null){
                     name_ = admin.Name;
                 }
-                return ROLE_ADMIN;
+                return AppUtils.ROLE_ADMIN;
             }
             return -1;
         }
@@ -223,24 +231,24 @@ public class LoginSignupFragment extends Fragment {
     private class InsertionTask extends AsyncTask<Integer,Void,Integer>{
         @Override
         protected Integer doInBackground(Integer... role) {
-            if(role[0] == ROLE_INSTRUCTOR) {
+            if(role[0] == AppUtils.ROLE_INSTRUCTOR) {
                 instructorDAO.insertOneInstructor(new Instructor(username_, password_, name_));
-                return ROLE_INSTRUCTOR;
-            }else if(role[0] == ROLE_STUDENT){
+                return AppUtils.ROLE_INSTRUCTOR;
+            }else if(role[0] == AppUtils.ROLE_STUDENT){
                 studentDAO.insertOneStudent(new Student(username_, password_, name_));
-                return ROLE_STUDENT;
-            }else if(role[0] == ROLE_ADMIN){
+                return AppUtils.ROLE_STUDENT;
+            }else if(role[0] == AppUtils.ROLE_ADMIN){
                 if(adminDAO.getAll().isEmpty()){
-                    adminDAO.insertOneAdmin(new Admin("admin","admin123","Admin"));
+                    adminDAO.insertOneAdmin(new Admin("admin","admin123","Olivia Borel"));
                 }
-                return ROLE_ADMIN;
+                return AppUtils.ROLE_ADMIN;
             }
             return -1;
         }
 
         @Override
         protected void onPostExecute(Integer role) {
-            if(role != ROLE_ADMIN && role >0){
+            if(role != AppUtils.ROLE_ADMIN && role >0){
                 NavDirections direction = LoginSignupFragmentDirections.actionLoginSignupFragmentDestinationToWelcomeFragment()
                         .setName(name_)
                         .setRole(role);

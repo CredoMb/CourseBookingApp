@@ -3,31 +3,28 @@ package com.example.android.coursebookingapp.screens.mainFragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.android.coursebookingapp.AdminActivity;
+import com.example.android.coursebookingapp.AppUtils;
+import com.example.android.coursebookingapp.MainActivity;
 import com.example.android.coursebookingapp.R;
 import com.example.android.coursebookingapp.databinding.IntroductionFragmentBinding;
 import com.example.android.coursebookingapp.databinding.WelcomeFragmentBinding;
-import com.example.android.coursebookingapp.screens.WelcomeFragmentArgs;
 
 public class WelcomeFragment extends Fragment {
-
-
-    public int ACTION_LOGIN = 1;
-    public int ACTION_SIGNUP = 2;
-
-    public int   ROLE_ADMIN = 3;
-    public int ROLE_INSTRUCTOR = 4;
-    public int ROLE_STUDENT = 5;
-
     private int CheckedButtonId;
 
     private String name;
@@ -43,6 +40,8 @@ public class WelcomeFragment extends Fragment {
                 container,
                 false);
 
+        this.setHasOptionsMenu(true);
+
         role = WelcomeFragmentArgs.fromBundle(getArguments()).getRole();
         name = WelcomeFragmentArgs.fromBundle(getArguments()).getName();
 
@@ -52,8 +51,8 @@ public class WelcomeFragment extends Fragment {
             binding.roleText.setText("You logged in as a "+getRole(role));
         }
 
-        if(role == ROLE_ADMIN) {
-            binding.action1Button.setText("Course List");
+        if(role == AppUtils.ROLE_ADMIN) {
+            binding.action1Button.setText("Admin Options");
         } else{
             binding.action1Button.setText("Get Started");
         }
@@ -62,8 +61,8 @@ public class WelcomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(role == ROLE_ADMIN) {
-                    intent = new Intent(getContext(), AdminActivity.class);
+                if(role == AppUtils.ROLE_ADMIN) {
+                    intent = new Intent(getActivity(), AdminActivity.class);
                     startActivity(intent);
                 }
             }
@@ -73,13 +72,29 @@ public class WelcomeFragment extends Fragment {
     }
 
     private String getRole(int roleCode) {
-        if(roleCode == ROLE_ADMIN)  {
+        if(roleCode == AppUtils.ROLE_ADMIN)  {
             return "Admin";
-        }else if(roleCode == ROLE_INSTRUCTOR) {
+        }else if(roleCode == AppUtils.ROLE_INSTRUCTOR) {
             return "Instructor";
-        }else if (roleCode == ROLE_STUDENT) {
+        }else if (roleCode == AppUtils.ROLE_STUDENT) {
             return "Student";
         }
         return "";
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.admin_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.logoutMenuButton){
+            while(NavHostFragment.findNavController(getParentFragment()).popBackStack()){};
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
