@@ -19,10 +19,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.android.coursebookingapp.AdminActivity;
 import com.example.android.coursebookingapp.AppUtils;
+import com.example.android.coursebookingapp.InstructorActivity;
 import com.example.android.coursebookingapp.MainActivity;
 import com.example.android.coursebookingapp.R;
 import com.example.android.coursebookingapp.databinding.IntroductionFragmentBinding;
 import com.example.android.coursebookingapp.databinding.WelcomeFragmentBinding;
+
+import static com.example.android.coursebookingapp.AppUtils.INSTRUCTION_NAME_EXTRA;
 
 public class WelcomeFragment extends Fragment {
     private int CheckedButtonId;
@@ -63,6 +66,10 @@ public class WelcomeFragment extends Fragment {
                 Intent intent;
                 if(role == AppUtils.ROLE_ADMIN) {
                     intent = new Intent(getActivity(), AdminActivity.class);
+                    startActivity(intent);
+                }else if(role == AppUtils.ROLE_INSTRUCTOR) {
+                    intent = new Intent(getActivity(), InstructorActivity.class);
+                    intent.putExtra(INSTRUCTION_NAME_EXTRA,name);
                     startActivity(intent);
                 }
             }
