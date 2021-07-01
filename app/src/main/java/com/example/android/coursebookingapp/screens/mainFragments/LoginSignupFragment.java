@@ -124,14 +124,14 @@ public class LoginSignupFragment extends Fragment {
                     }else {
                         RetrieveTask retrieveTask = new RetrieveTask();
 
-                        if(role == ROLE_STUDENT){
-                            retrieveTask.execute(ROLE_STUDENT);
-                        }else if(role == ROLE_INSTRUCTOR){
+                        if(role == AppUtils.ROLE_STUDENT){
+                            retrieveTask.execute(AppUtils.ROLE_STUDENT);
+                        }else if(role == AppUtils.ROLE_INSTRUCTOR){
                             // Find the element in the
                             // database
-                            retrieveTask.execute(ROLE_INSTRUCTOR);
-                        } else if(role == ROLE_ADMIN){
-                            retrieveTask.execute(ROLE_ADMIN);
+                            retrieveTask.execute(AppUtils.ROLE_INSTRUCTOR);
+                        } else if(role == AppUtils.ROLE_ADMIN){
+                            retrieveTask.execute(AppUtils.ROLE_ADMIN);
                         }
                     }
 
