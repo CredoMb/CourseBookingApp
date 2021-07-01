@@ -34,8 +34,9 @@ public class Course {
         this.courseCode = course.courseCode;
         this.id = course.id;
     }*/
-    /*
-    For later deliv
+
+    @ColumnInfo(name = "teacher_id", defaultValue = "-1")
+    public int teacher_id;
 
     @ColumnInfo(name = "day")
     public String day;
@@ -44,6 +45,6 @@ public class Course {
     public String hour;
 
     @ColumnInfo(name = "capacity")
-    public int capacity;*/
+    public int capacity;
 }
 

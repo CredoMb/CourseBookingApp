@@ -1,4 +1,8 @@
 package com.example.android.coursebookingapp.screens.instructorFragments;
 
-public class InstrCourseDetailFragment {
+import androidx.fragment.app.Fragment;
+
+public class InstrCourseDetailFragment extends Fragment {
+
+
 }
