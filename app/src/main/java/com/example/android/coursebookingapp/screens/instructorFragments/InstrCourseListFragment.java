@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,8 @@ public class InstrCourseListFragment extends Fragment {
     private String instructorName_;
     private boolean IM_TEACHING = false;
 
+    private RelativeLayout emptyGroupView_;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +67,8 @@ public class InstrCourseListFragment extends Fragment {
         courseDAO = db.courseDao();
         instructorDAO = db.instructorDao();
 
+        emptyGroupView_ = binding.emptyGroupView;
+
         // Create the adapter to hold the list of courses
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, new ArrayList<String>());
@@ -72,6 +77,8 @@ public class InstrCourseListFragment extends Fragment {
         // from the database
         CourseOperationsTask courseOperations = new CourseOperationsTask();
         courseOperations.execute();
+
+        binding.listView.setAdapter(adapter);
 
         // We need the id
         return binding.getRoot();
@@ -98,7 +105,7 @@ public class InstrCourseListFragment extends Fragment {
                     if(currCourse.teacher_id == currentInstructor_.id) {
                         teachingText = "(teaching)";
                     }
-                    courseStringList.add(allCourse.get(i).courseName + " | "+allCourse.get(i).courseCode + " "+teachingText);
+                    courseStringList.add(currCourse.courseName + " | "+currCourse.courseCode + " "+teachingText);
                 }
                 return courseStringList;
             };
@@ -114,11 +121,10 @@ public class InstrCourseListFragment extends Fragment {
                 synchronized(adapter){
                     adapter.notifyAll();
                 }
-
-                //courseArrList_ = (ArrayList<String>) courseList;
+                emptyGroupView_.setVisibility(View.GONE);
+            }else{
+                emptyGroupView_.setVisibility(View.VISIBLE);
             }
-            // Add it to the listView here
-            //
             super.onPostExecute(courseList);
         }
     }
