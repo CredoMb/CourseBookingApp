@@ -50,6 +50,81 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Course Description category -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseDescriptionOutlinedTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Description">
+
+            <!-- Course Description Field -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_courseDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/menu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Day">
+
+            <AutoCompleteTextView
+                android:id="@+id/day_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Course Hour category -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseHourOutlinedTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Hour">
+
+            <!-- Course Hour Field -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_courseHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Course Capacity category -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/capacityOutlinedTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Capacity">
+
+            <!-- Course Capacity Field -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/buttons_groupView"

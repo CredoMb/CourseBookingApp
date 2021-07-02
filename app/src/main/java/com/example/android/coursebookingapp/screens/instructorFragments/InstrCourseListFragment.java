@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
 
 import com.example.android.coursebookingapp.AppUtils;
@@ -23,6 +26,7 @@ import com.example.android.coursebookingapp.database.CourseDAO;
 import com.example.android.coursebookingapp.database.Instructor;
 import com.example.android.coursebookingapp.database.InstructorDAO;
 import com.example.android.coursebookingapp.databinding.InstrCourseListFragmentBinding;
+import com.example.android.coursebookingapp.screens.adminFragments.AdminCourseListFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +84,24 @@ public class InstrCourseListFragment extends Fragment {
 
         binding.listView.setAdapter(adapter);
 
+        binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String courseNameAndCode = adapter.getItem(position);
+
+
+                NavDirections direction = InstrCourseListFragmentDirections.actionInstrCourseListFragmentToInstrCourseDetailFragment()
+                        .setCourseFullName(courseNameAndCode)
+                        .setIsAssigned(false);
+
+                NavHostFragment.findNavController(getParentFragment()).navigate(direction);
+                // Separate the text
+            }
+        });
+
         // We need the id
+        getActivity().setTitle("Instructor Section");
         return binding.getRoot();
     }
 

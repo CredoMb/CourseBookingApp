@@ -22,6 +22,9 @@ public class Course {
     @NonNull
     public String courseCode;
 
+    @ColumnInfo(name = "description")
+    public String courseDescription;
+
     public Course(String courseName, String courseCode) {
         this.courseCode = courseCode;
         this.courseName = courseName;

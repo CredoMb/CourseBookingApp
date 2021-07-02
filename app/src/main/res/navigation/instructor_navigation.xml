@@ -14,5 +14,18 @@
     <fragment
         android:id="@+id/instrCourseDetailFragment"
         android:name="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseDetailFragment"
-        android:label="InstrCourseDetailFragment" />
+        android:label="InstrCourseDetailFragment">
+        <argument
+            android:name="courseFullName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <argument
+            android:name="isAssigned"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+
+
 </navigation>
