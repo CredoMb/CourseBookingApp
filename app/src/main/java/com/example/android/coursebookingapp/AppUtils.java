@@ -24,5 +24,5 @@ public final class AppUtils {
     public static int GET_ALL_COURSES = 8;
 
     //
-    public static String INSTRUCTION_NAME_EXTRA = "intruction_name";
+    public static String INSTRUCTOR_NAME_EXTRA = "intruction_name";
 }

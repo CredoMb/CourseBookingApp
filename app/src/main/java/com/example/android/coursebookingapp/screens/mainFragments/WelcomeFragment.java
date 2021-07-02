@@ -8,8 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +20,9 @@ import com.example.android.coursebookingapp.AppUtils;
 import com.example.android.coursebookingapp.InstructorActivity;
 import com.example.android.coursebookingapp.MainActivity;
 import com.example.android.coursebookingapp.R;
-import com.example.android.coursebookingapp.databinding.IntroductionFragmentBinding;
 import com.example.android.coursebookingapp.databinding.WelcomeFragmentBinding;
 
-import static com.example.android.coursebookingapp.AppUtils.INSTRUCTION_NAME_EXTRA;
+import static com.example.android.coursebookingapp.AppUtils.INSTRUCTOR_NAME_EXTRA;
 
 public class WelcomeFragment extends Fragment {
     private int CheckedButtonId;
@@ -69,7 +66,7 @@ public class WelcomeFragment extends Fragment {
                     startActivity(intent);
                 }else if(role == AppUtils.ROLE_INSTRUCTOR) {
                     intent = new Intent(getActivity(), InstructorActivity.class);
-                    intent.putExtra(INSTRUCTION_NAME_EXTRA,name);
+                    intent.putExtra(INSTRUCTOR_NAME_EXTRA,name);
                     startActivity(intent);
                 }
             }
