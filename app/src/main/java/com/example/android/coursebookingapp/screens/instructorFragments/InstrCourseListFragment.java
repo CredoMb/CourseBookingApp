@@ -20,6 +20,7 @@ import com.example.android.coursebookingapp.database.Course;
 import com.example.android.coursebookingapp.database.CourseBookingDataBase;
 import com.example.android.coursebookingapp.database.CourseDAO;
 import com.example.android.coursebookingapp.database.Instructor;
+import com.example.android.coursebookingapp.database.InstructorDAO;
 import com.example.android.coursebookingapp.databinding.InstrCourseListFragmentBinding;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.List;
 public class InstrCourseListFragment extends Fragment {
 
     private CourseDAO courseDAO;
+    private InstructorDAO instructorDAO;
     //
     private String courseName_;
     private String courseCode_;
@@ -36,8 +38,11 @@ public class InstrCourseListFragment extends Fragment {
     private CourseBookingDataBase db;
     private ArrayAdapter<String> adapter;
 
-    private Instructor currentInstructor;
+    private Instructor currentInstructor_;
     private Intent intent;
+
+    private String instructorName_;
+    private boolean IM_TEACHING = false;
 
     @Nullable
     @Override
@@ -50,14 +55,14 @@ public class InstrCourseListFragment extends Fragment {
                 container,
                 false);
 
-        // get the extra from the intent
-        // in this fragment
-        intent = getActivity().getIntent();
+        // get the intent extra from
+        instructorName_ = getActivity().getIntent().getStringExtra(AppUtils.INSTRUCTOR_NAME_EXTRA);
 
         db = Room.databaseBuilder(getContext(),
                 CourseBookingDataBase.class, AppUtils.DATA_BASE_NAME).build();
 
         courseDAO = db.courseDao();
+        instructorDAO = db.instructorDao();
 
         // Create the adapter to hold the list of courses
         adapter = new ArrayAdapter<String>(getContext(),
@@ -69,7 +74,6 @@ public class InstrCourseListFragment extends Fragment {
         courseOperations.execute();
 
         // We need the id
-
         return binding.getRoot();
     }
 
@@ -80,10 +84,21 @@ public class InstrCourseListFragment extends Fragment {
             List<Course> allCourse = courseDAO.getAll();
             List<String> courseStringList = new ArrayList<String>();
 
+            // The current course we are dealing with
+            Course currCourse = new Course();
+            String teachingText = "";
+
+            // Get the instructor from the database
+            currentInstructor_ = instructorDAO.findByName(instructorName_);
+
             if(!allCourse.isEmpty()){
                 for(int i=0; i<allCourse.size();i++){
-                    courseStringList.add(allCourse.get(i).courseName + " | "+allCourse.get(i).courseCode);
+                    currCourse = allCourse.get(i);
 
+                    if(currCourse.teacher_id == currentInstructor_.id) {
+                        teachingText = "(teaching)";
+                    }
+                    courseStringList.add(allCourse.get(i).courseName + " | "+allCourse.get(i).courseCode + " "+teachingText);
                 }
                 return courseStringList;
             };
