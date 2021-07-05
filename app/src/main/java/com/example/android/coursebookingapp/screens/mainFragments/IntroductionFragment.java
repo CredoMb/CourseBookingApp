@@ -16,7 +16,6 @@ import androidx.navigation.Navigation;
 import com.example.android.coursebookingapp.AppUtils;
 import com.example.android.coursebookingapp.R;
 import com.example.android.coursebookingapp.databinding.IntroductionFragmentBinding;
-import com.example.android.coursebookingapp.screens.IntroductionFragmentDirections;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 
@@ -51,14 +50,14 @@ public class IntroductionFragment extends Fragment {
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if(CheckedButtonId == R.id.student_button) {
-                        openLoginSignupFragment(AppUtils.ACTION_SIGNUP, AppUtils.ROLE_STUDENT,v);
-                    }else if(CheckedButtonId == R.id.instructors_button) {
-                        openLoginSignupFragment(AppUtils.ACTION_SIGNUP,AppUtils.ROLE_INSTRUCTOR,v);
-                    }else{
-                        Toast.makeText(getContext(),"You need to select a role",Toast.LENGTH_LONG).show();
-                    }
+                if(CheckedButtonId == R.id.student_button) {
+                    openLoginSignupFragment(AppUtils.ACTION_SIGNUP, AppUtils.ROLE_STUDENT,v);
+                }else if(CheckedButtonId == R.id.instructors_button) {
+                    openLoginSignupFragment(AppUtils.ACTION_SIGNUP,AppUtils.ROLE_INSTRUCTOR,v);
+                }else{
+                    Toast.makeText(getContext(),"You need to select a role",Toast.LENGTH_LONG).show();
                 }
+            }
                 /*else{
                 }*/
 

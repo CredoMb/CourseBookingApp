@@ -28,7 +28,7 @@ import com.example.android.coursebookingapp.database.StudentDAO;
 import com.example.android.coursebookingapp.databinding.LoginSignupFragmentBinding;
 
 public class LoginSignupFragment extends Fragment {
-
+    //logic of page for login and sign up
     private CourseBookingDataBase db;
 
     private AdminDAO adminDAO;
@@ -116,25 +116,6 @@ public class LoginSignupFragment extends Fragment {
                         }
                     }
 
-                    username_ = binding.editUsername.getText().toString();
-                    password_ = binding.editPassword.getText().toString();
-
-                    if(username_.isEmpty() || password_.isEmpty()) {
-                        Toast.makeText(getContext(),"Please make sure to complete the username and the password",Toast.LENGTH_LONG).show();
-                    }else {
-                        RetrieveTask retrieveTask = new RetrieveTask();
-
-                        if(role == ROLE_STUDENT){
-                            retrieveTask.execute(ROLE_STUDENT);
-                        }else if(role == ROLE_INSTRUCTOR){
-                            // Find the element in the
-                            // database
-                            retrieveTask.execute(ROLE_INSTRUCTOR);
-                        } else if(role == ROLE_ADMIN){
-                            retrieveTask.execute(ROLE_ADMIN);
-                        }
-                    }
-
                 }else{
 
                     name_ = binding.editName.getText().toString();
@@ -142,7 +123,7 @@ public class LoginSignupFragment extends Fragment {
                     password_ = "";
 
                     if(name_.isEmpty() || username_.isEmpty() || binding.editPassword.getText().toString().isEmpty()
-                    || binding.editPassword.getText().toString().isEmpty()) {
+                            || binding.editPassword.getText().toString().isEmpty()) {
                         Toast.makeText(getContext(),"Please make sure to complete all the fields",Toast.LENGTH_LONG).show();
                     }else {
 

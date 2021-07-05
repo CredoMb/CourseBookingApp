@@ -42,6 +42,10 @@ public interface CourseDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertOneCourse(Course course);
 
+    @Query("SELECT * FROM course WHERE name LIKE :courseInfo OR " +
+            " code LIKE :courseInfo LIMIT 1")
+    Course findByCodeOrName(String courseInfo);
+
     @Query("DELETE FROM course WHERE name = :courseName AND "+
     " code = :courseCode")
     int delete(String courseName,String courseCode);

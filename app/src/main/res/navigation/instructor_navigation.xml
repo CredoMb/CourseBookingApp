@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/instructor_navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/instructor_navigation"
+    app:startDestination="@id/instrCourseListFragment">
 
+    <fragment
+        android:id="@+id/instrCourseListFragment"
+        android:name="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseListFragment"
+        android:label="InstrCourseListFragment" >
+        <action
+            android:id="@+id/action_instrCourseListFragment_to_instrCourseDetailFragment"
+            app:destination="@id/instrCourseDetailFragment" />
+        <action
+            android:id="@+id/action_instrCourseListFragment_to_instrCourseSearchFragment"
+            app:destination="@id/instrCourseSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/instrCourseDetailFragment"
+        android:name="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseDetailFragment"
+        android:label="InstrCourseDetailFragment">
+        <argument
+            android:name="courseFullName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <argument
+            android:name="instructorName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <argument
+            android:name="isAssigned"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_instrCourseDetailFragment_to_instrCourseListFragment"
+            app:destination="@id/instrCourseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/instrCourseSearchFragment"
+        android:name="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseSearchFragment"
+        android:label="instr_course_search_fragment"
+        tools:layout="@layout/instr_course_search_fragment" >
+        <action
+            android:id="@+id/action_instrCourseSearchFragment_to_instrCourseDetailFragment"
+            app:destination="@id/instrCourseDetailFragment" />
+        <action
+            android:id="@+id/action_instrCourseSearchFragment_to_instrCourseListFragment"
+            app:destination="@id/instrCourseListFragment" />
+        <argument
+            android:name="instructorName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+    </fragment>
 </navigation>
