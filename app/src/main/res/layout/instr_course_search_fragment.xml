@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/details_fragment_spacing"
-            android:hint="Course Name">
+            android:hint="Course Info">
 
             <!-- Course Name field-->
             <com.google.android.material.textfield.TextInputEditText

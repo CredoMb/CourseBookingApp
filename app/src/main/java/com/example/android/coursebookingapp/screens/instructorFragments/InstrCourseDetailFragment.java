@@ -51,6 +51,7 @@ public class InstrCourseDetailFragment extends Fragment {
 
     private ArrayAdapter<String> daysAdapter_;
 
+    private View.OnClickListener listener;
     //
     @Nullable
     @Override
@@ -107,6 +108,21 @@ public class InstrCourseDetailFragment extends Fragment {
             getCourseTask.execute();
 
         }
+
+        listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Sorry, Can't be modified",Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        // Can not modify the code or name
+        binding.editCourseName.setInputType(TYPE_NULL);
+        binding.editCourseCode.setInputType(TYPE_NULL);
+
+        // 
+        binding.editCourseCode.setOnClickListener(listener);
+        binding.editCourseName.setOnClickListener(listener);
 
         binding.teachThisSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
