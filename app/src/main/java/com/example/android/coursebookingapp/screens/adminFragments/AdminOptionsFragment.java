@@ -56,6 +56,10 @@ public class AdminOptionsFragment extends Fragment {
                     direction = AdminOptionsFragmentDirections.actionAdminOptionsFragmentToStudentListFragment();
                     Navigation.findNavController(v).navigate(direction);
                 }
+
+                // Run a database search and
+                // put the value inside of the
+                // listview.
             }
         });
 

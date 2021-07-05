@@ -24,6 +24,8 @@ public class Instructor {
     @NonNull
     public String name_;
 
+    public Instructor(){};
+
     public Instructor(String userName,String passWord, String name_){
 
         this.userName = userName;
