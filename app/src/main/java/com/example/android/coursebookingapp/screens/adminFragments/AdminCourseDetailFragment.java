@@ -38,7 +38,6 @@ public class AdminCourseDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         AdminCourseDetailFragmentBinding binding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.admin_course_detail_fragment,
@@ -51,7 +50,6 @@ public class AdminCourseDetailFragment extends Fragment {
                 CourseBookingDataBase.class, AppUtils.DATA_BASE_NAME).build();
 
         courseDAO = db.courseDao();
-
 
         currentCourse_ = new Course();
 

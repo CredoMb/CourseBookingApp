@@ -92,7 +92,6 @@ public class AdminCourseListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NavDirections direction = AdminCourseListFragmentDirections.actionCourseListFragmentToCourseDetailFragment();
-
                 NavHostFragment.findNavController(getParentFragment()).navigate(direction);
             }
         });

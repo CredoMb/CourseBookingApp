@@ -22,13 +22,18 @@ public class Course {
     @NonNull
     public String courseCode;
 
+    @ColumnInfo(name = "description")
+    public String courseDescription;
+
     public Course(String courseName, String courseCode) {
         this.courseCode = courseCode;
         this.courseName = courseName;
     }
+
     public Course(){}
+
     // The entire course
-    // save it
+    // Save it We
     /*public Course(Course course){
         this.courseName = course.courseName;
         this.courseCode = course.courseCode;
@@ -38,11 +43,18 @@ public class Course {
     @ColumnInfo(name = "teacher_id", defaultValue = "-1")
     public int teacher_id;
 
-    @ColumnInfo(name = "day")
-    public String day;
+    // First time period
+    @ColumnInfo(name = "day1")
+    public String day1;
+    @ColumnInfo(name = "hour1")
+    public String hour1;
 
-    @ColumnInfo(name = "hour")
-    public String hour;
+    // Second time period
+    @ColumnInfo(name = "day2")
+    public String day2;
+    @ColumnInfo(name = "hour2")
+    public String hour2;
+
 
     @ColumnInfo(name = "capacity")
     public int capacity;

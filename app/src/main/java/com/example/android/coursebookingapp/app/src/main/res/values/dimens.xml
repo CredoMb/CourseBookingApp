@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="form_top_margin">16dp</dimen>
+    <dimen name="fields_container_padding">48dp</dimen>
+    <dimen name="details_fragment_spacing">8dp</dimen>
+</resources>
