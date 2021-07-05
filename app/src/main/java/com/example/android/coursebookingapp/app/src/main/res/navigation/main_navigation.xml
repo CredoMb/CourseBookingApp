@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation"
+    app:startDestination="@id/introductionFragment">
+
+    <fragment
+        android:id="@+id/introductionFragment"
+        android:name="com.example.android.coursebookingapp.screens.IntroductionFragment"
+        android:label="introductionFragment" >
+        <action
+            android:id="@+id/action_introductionFragment_to_loginSignupFragment"
+            app:destination="@id/loginSignupFragment_destination"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginSignupFragment_destination"
+        android:name="com.example.android.coursebookingapp.screens.LoginSignupFragment"
+        android:label="LoginSignupFragment" >
+        <argument
+            android:name="action"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <argument
+            android:name="role"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_loginSignupFragment_destination_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.android.coursebookingapp.screens.WelcomeFragment"
+        android:label="WelcomeFragment" >
+
+        <argument
+            android:name="name"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+
+        <argument
+            android:name="role"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

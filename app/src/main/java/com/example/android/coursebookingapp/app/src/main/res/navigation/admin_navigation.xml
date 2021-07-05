@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/admin_navigation"
+    app:startDestination="@id/adminOptionsFragment">
+
+    <fragment
+        android:id="@+id/courseListFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminCourseListFragment"
+        android:label="CourseListFragment" >
+        <action
+            android:id="@+id/action_courseListFragment_to_courseDetailFragment"
+            app:destination="@id/courseDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseDetailFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminCourseDetailFragment"
+        android:label="CourseDetailFragment" >
+
+        <argument
+            android:name="courseFullName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_courseDetailFragment_to_courseListFragment"
+            app:destination="@id/courseListFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/adminOptionsFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminOptionsFragment"
+        android:label="AdminOptionsFragment" >
+        <action
+            android:id="@+id/action_adminOptionsFragment_to_courseListFragment"
+            app:destination="@id/courseListFragment" />
+        <action
+            android:id="@+id/action_adminOptionsFragment_to_instructorListFragment"
+            app:destination="@id/instructorListFragment" />
+        <action
+            android:id="@+id/action_adminOptionsFragment_to_studentListFragment"
+            app:destination="@id/studentListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/instructorListFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminInstructorListFragment"
+        android:label="InstructorListFragment" >
+        <action
+            android:id="@+id/action_instructorListFragment_to_instructorDetailFragment"
+            app:destination="@id/instructorDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/instructorDetailFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminInstructorDetailFragment"
+        android:label="InstructorDetailFragment" >
+        <action
+            android:id="@+id/action_instructorDetailFragment_to_instructorListFragment2"
+            app:destination="@id/instructorListFragment"
+            app:popUpTo="@id/instructorDetailFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="nameAndUname"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentListFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminStudentListFragment"
+        android:label="StudentListFragment" >
+        <action
+            android:id="@+id/action_studentListFragment_to_studentDetailFragment"
+            app:destination="@id/studentDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentDetailFragment"
+        android:name="com.example.android.coursebookingapp.screens.adminFragments.AdminStudentDetailFragment"
+        android:label="StudentDetailFragment" >
+
+        <argument
+            android:name="nameAndUname"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_studentDetailFragment_to_studentListFragment"
+            app:destination="@id/studentListFragment"
+            app:popUpTo="@id/studentDetailFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
