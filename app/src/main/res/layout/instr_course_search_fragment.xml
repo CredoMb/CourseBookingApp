@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/details_container_inputFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/form_top_margin"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/fields_container_padding"
+        android:paddingRight="@dimen/fields_container_padding"
+        android:paddingBottom="@dimen/form_top_margin"
+        tools:context="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseSearchFragment">
+
+        <!-- Course Name category -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseNameOutlinedTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/details_fragment_spacing"
+            android:hint="Course Name">
+
+            <!-- Course Name field-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_courseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/details_fragment_spacing"
+            android:text="Search"
+            android:textColor="@android:color/white"/>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="16dp" />
+    </LinearLayout>
+</layout>

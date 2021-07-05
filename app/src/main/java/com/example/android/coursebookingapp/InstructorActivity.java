@@ -27,12 +27,11 @@ public class InstructorActivity extends AppCompatActivity {
     //
 
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.admin_menu,menu); // instructor menu?
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -47,7 +46,7 @@ public class InstructorActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
 
 

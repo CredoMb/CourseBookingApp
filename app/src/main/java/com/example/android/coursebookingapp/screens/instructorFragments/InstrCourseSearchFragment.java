@@ -3,6 +3,15 @@ package com.example.android.coursebookingapp.screens.instructorFragments;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.room.Room;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,14 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
-
 import com.example.android.coursebookingapp.AppUtils;
 import com.example.android.coursebookingapp.InstructorActivity;
 import com.example.android.coursebookingapp.MainActivity;
@@ -31,68 +32,72 @@ import com.example.android.coursebookingapp.database.CourseBookingDataBase;
 import com.example.android.coursebookingapp.database.CourseDAO;
 import com.example.android.coursebookingapp.database.Instructor;
 import com.example.android.coursebookingapp.database.InstructorDAO;
-import com.example.android.coursebookingapp.databinding.InstrCourseListFragmentBinding;
-import com.example.android.coursebookingapp.screens.adminFragments.AdminCourseListFragmentDirections;
+import com.example.android.coursebookingapp.databinding.InstrCourseSearchFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.android.coursebookingapp.AppUtils.INSTRUCTOR_NAME_EXTRA;
 
-public class InstrCourseListFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ *
+ * create an instance of this fragment.
+ */
+public class InstrCourseSearchFragment extends Fragment {
+
+    private String courseInfo;
 
     private CourseDAO courseDAO;
     private InstructorDAO instructorDAO;
 
-    //
-    private String courseName_;
-    private String courseCode_;
-
-    private ArrayList<String> courseArrList_;
     private CourseBookingDataBase db;
-    private ArrayAdapter<String> adapter;
 
-    private Instructor currentInstructor_;
-    private Intent intent;
+    private ArrayAdapter<String> adapter;
+    private RelativeLayout emptyGroupView_;
 
     private String instructorName_;
-    private boolean IM_TEACHING = false;
-
-    private RelativeLayout emptyGroupView_;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        // return inflater;
-        //
-        InstrCourseListFragmentBinding binding = DataBindingUtil.inflate(
+        // Inflate the layout for this fragment
+        InstrCourseSearchFragmentBinding binding = DataBindingUtil.inflate(
                 inflater,
-                R.layout.instr_course_list_fragment,
+                R.layout.instr_course_search_fragment,
                 container,
                 false);
 
-        // get the intent extra from
-        instructorName_ = getActivity().getIntent().getStringExtra(AppUtils.INSTRUCTOR_NAME_EXTRA).trim();
-
+        setHasOptionsMenu(true);
         db = Room.databaseBuilder(getContext(),
                 CourseBookingDataBase.class, AppUtils.DATA_BASE_NAME).build();
 
+        instructorName_ = InstrCourseSearchFragmentArgs.fromBundle(getArguments()).getInstructorName();
+
         courseDAO = db.courseDao();
         instructorDAO = db.instructorDao();
-
-        emptyGroupView_ = binding.emptyGroupView;
 
         // Create the adapter to hold the list of courses
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, new ArrayList<String>());
 
-        // Start a background thread to get all the courses
-        // from the database
-        CourseOperationsTask courseOperations = new CourseOperationsTask();
-        courseOperations.execute();
-
         binding.listView.setAdapter(adapter);
+
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!binding.editCourseName.getText().toString().isEmpty()){
+
+                    courseInfo = binding.editCourseName.getText().toString();
+
+                    CourseSearchTask courseSearchTask = new CourseSearchTask();
+                    courseSearchTask.execute();
+
+                }else{
+                    Toast.makeText(getContext(),"The search text should not be empty",Toast.LENGTH_LONG);
+                }
+            }
+        });
 
         binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,7 +106,7 @@ public class InstrCourseListFragment extends Fragment {
                 String courseNameAndCode = adapter.getItem(position);
 
                 // Search for the course and determine
-                NavDirections direction = InstrCourseListFragmentDirections.actionInstrCourseListFragmentToInstrCourseDetailFragment()
+                NavDirections direction = InstrCourseSearchFragmentDirections.actionInstrCourseSearchFragmentToInstrCourseDetailFragment()
                         .setInstructorName(instructorName_)
                         .setCourseFullName(courseNameAndCode);
 
@@ -116,74 +121,56 @@ public class InstrCourseListFragment extends Fragment {
                 // Separate the text
             }
         });
-
-        // We need the id
-        getActivity().setTitle("Instructor ");
         return binding.getRoot();
     }
 
-    private class CourseOperationsTask extends AsyncTask<Integer,Void, List<String>> {
+    private class CourseSearchTask extends AsyncTask<Integer,Void, String> {
         @Override
-        protected List<String> doInBackground(Integer... operation) {
+        protected String doInBackground(Integer... operation) {
 
-            List<Course> allCourse = courseDAO.getAll();
-            List<String> courseStringList = new ArrayList<String>();
+            // Find the searched course and Instructor
+            Course foundCourse = courseDAO.findByCodeOrName(courseInfo);
+            Instructor courseInstructor = instructorDAO.findByName(instructorName_);
 
-            // The current course we are dealing with
-            Course currCourse = new Course();
             String teachingText = "";
 
-            // Get the instructor from the database
-            currentInstructor_ = instructorDAO.findByName(instructorName_);
-
-            if(!allCourse.isEmpty()){
-                for(int i=0; i<allCourse.size();i++){
-                    currCourse = allCourse.get(i);
-
-                    if(currCourse.teacher_id == currentInstructor_.id) {
-                        teachingText = AppUtils.TEACHING_TEXT;
-                    }else{
-                        teachingText = "";
-                    }
-
-                    courseStringList.add(currCourse.courseName + " | "+currCourse.courseCode + " "+teachingText);
-                    // What to do now ?
-                    // I don't know
+            if(foundCourse != null){
+                if(foundCourse.teacher_id == courseInstructor.id) {
+                    teachingText = " "+AppUtils.TEACHING_TEXT;
+                }else{
+                    teachingText = "";
                 }
-                return courseStringList;
-            };
+                return foundCourse.courseName + " | "+foundCourse.courseCode + teachingText;
+            }
             return null;
         }
 
         @Override
-        protected void onPostExecute(List<String> courseList) {
+        protected void onPostExecute(String courseFullName) {
 
-            if(courseList != null) {
-                courseArrList_ = (ArrayList<String>) courseList;
-                adapter.addAll(courseList);
+            if(courseFullName != null) {
+                adapter.add(courseFullName);
                 synchronized(adapter){
                     adapter.notifyAll();
                 }
-                emptyGroupView_.setVisibility(View.GONE);
-            }else{
-                emptyGroupView_.setVisibility(View.VISIBLE);
+
             }
-            super.onPostExecute(courseList);
+            super.onPostExecute(courseFullName);
         }
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.instr_menu, menu);
-    }
+        public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+            inflater.inflate(R.menu.instr_menu, menu);
+        }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == R.id.searchMenuButton){
-            NavDirections  direction = InstrCourseListFragmentDirections.actionInstrCourseListFragmentToInstrCourseSearchFragment()
-                    .setInstructorName(instructorName_);
-            NavHostFragment.findNavController(getParentFragment()).navigate(direction);
+        if(item.getItemId() == R.id.listMenuButton){
+            Intent intent = new Intent(getActivity(), InstructorActivity.class);
+            intent.putExtra(INSTRUCTOR_NAME_EXTRA,instructorName_);
+            startActivity(intent);
         }else if(item.getItemId() == R.id.logoutMenuButton){
 
             int nbF = getActivity().getSupportFragmentManager().getBackStackEntryCount();
@@ -201,7 +188,9 @@ public class InstrCourseListFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        menu.findItem(R.id.listMenuButton).setEnabled(false);
+        menu.findItem(R.id.searchMenuButton).setEnabled(false);
         super.onPrepareOptionsMenu(menu);
     }
+
+    // Le monde est à nous, à toi puis moi
 }
