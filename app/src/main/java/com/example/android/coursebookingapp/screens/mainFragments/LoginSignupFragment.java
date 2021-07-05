@@ -28,7 +28,7 @@ import com.example.android.coursebookingapp.database.StudentDAO;
 import com.example.android.coursebookingapp.databinding.LoginSignupFragmentBinding;
 
 public class LoginSignupFragment extends Fragment {
-
+    //logic of page for login and sign up
     private CourseBookingDataBase db;
 
     private AdminDAO adminDAO;
