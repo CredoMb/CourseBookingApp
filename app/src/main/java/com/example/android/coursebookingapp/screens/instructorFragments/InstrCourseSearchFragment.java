@@ -153,7 +153,6 @@ public class InstrCourseSearchFragment extends Fragment {
                 synchronized(adapter){
                     adapter.notifyAll();
                 }
-
             }
             super.onPostExecute(courseFullName);
         }

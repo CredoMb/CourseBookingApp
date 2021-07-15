@@ -52,6 +52,7 @@ public class InstrCourseDetailFragment extends Fragment {
     private ArrayAdapter<String> daysAdapter_;
 
     private View.OnClickListener listener;
+
     //
     @Nullable
     @Override
@@ -169,10 +170,20 @@ public class InstrCourseDetailFragment extends Fragment {
 
                     // Take the first and second period
                     currentCourse_.day1 = binding.day1AutoComplete.getText().toString();
-                    currentCourse_.hour1 = binding.editCourseHour1.getText().toString();
+                    boolean hourValid = true;
+
+                    String first_hour = binding.editCourseHour1.getText().toString();
+                    if((currentCourse_.hour1 = AppUtils.validateTimeEntered(first_hour)) ==null){
+                        hourValid = false;
+                    }
 
                     currentCourse_.day2 = binding.day2AutoComplete.getText().toString();
-                    currentCourse_.hour2 = binding.editCourseHour2.getText().toString();
+
+                    String sec_hour = binding.editCourseHour2.getText().toString();
+                    if((currentCourse_.hour2 = AppUtils.validateTimeEntered(sec_hour)) ==null){
+                        hourValid = false;
+                    }
+                    //currentCourse_.hour2 = binding.editCourseHour2.getText().toString();
 
                     // Take the capacity and change it into an int
                     currentCourse_.capacity = !(binding.editCapacity.getText().toString().isEmpty())
@@ -181,9 +192,14 @@ public class InstrCourseDetailFragment extends Fragment {
                     // Update the teacher's id
                     currentCourse_.teacher_id = binding.teachThisSwitch.isChecked() ? loggedInstructor_.id:-1;
 
-                    // Save the course
-                    SaveCourseTask saveCourseTask = new SaveCourseTask();
-                    saveCourseTask.execute();
+                    // Save the course. What to do now
+                    if(hourValid){
+                        SaveCourseTask saveCourseTask = new SaveCourseTask();
+                        saveCourseTask.execute();
+                    }else{
+                        Toast.makeText(getContext(),"Enter valid hours (00:00)",Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });
@@ -293,6 +309,7 @@ public class InstrCourseDetailFragment extends Fragment {
             return courseDAO.insertOneCourse(currentCourse_);
         }
 
+        //
         @Override
         protected void onPostExecute(Long modif) {
             if(modif > 0){
@@ -303,6 +320,7 @@ public class InstrCourseDetailFragment extends Fragment {
             super.onPostExecute(modif);
         }
     }
+
     public int getDayIndex(String day){
         int index = 0;
 

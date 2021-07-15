@@ -10,6 +10,8 @@ public class InstructorWithCourses {
     @Embedded
     public Instructor instructor;
     @Relation(
+            // the column in the "instructor"
+            // table.
             parentColumn = "id",
             entityColumn = "teacher_id"
     )

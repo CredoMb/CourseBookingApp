@@ -134,3 +134,5 @@ public class AdminCourseListFragment extends Fragment {
         }
     }
 }
+
+// How to really pop the backstack ?

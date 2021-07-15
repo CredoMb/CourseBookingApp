@@ -20,6 +20,7 @@ import com.example.android.coursebookingapp.AppUtils;
 import com.example.android.coursebookingapp.InstructorActivity;
 import com.example.android.coursebookingapp.MainActivity;
 import com.example.android.coursebookingapp.R;
+import com.example.android.coursebookingapp.StudentActivity;
 import com.example.android.coursebookingapp.databinding.WelcomeFragmentBinding;
 
 import static com.example.android.coursebookingapp.AppUtils.INSTRUCTOR_NAME_EXTRA;
@@ -67,6 +68,10 @@ public class WelcomeFragment extends Fragment {
                 }else if(role == AppUtils.ROLE_INSTRUCTOR) {
                     intent = new Intent(getActivity(), InstructorActivity.class);
                     intent.putExtra(INSTRUCTOR_NAME_EXTRA,name);
+                    startActivity(intent);
+                }else if(role == AppUtils.ROLE_STUDENT){
+                    intent = new Intent(getActivity(), StudentActivity.class);
+                    intent.putExtra(AppUtils.STUDENT_NAME_EXTRA,name);
                     startActivity(intent);
                 }
             }

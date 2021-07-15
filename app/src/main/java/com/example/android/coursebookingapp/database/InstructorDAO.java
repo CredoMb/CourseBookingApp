@@ -47,7 +47,7 @@ public interface InstructorDAO {
     void insertOneInstructor(Instructor instructor);
 
     /*
-    @Delete
+    @Delete How did i update the instr
     void delete(Instructor instructor);*/
 
     @Query("DELETE FROM instructors WHERE name = :iName AND "+

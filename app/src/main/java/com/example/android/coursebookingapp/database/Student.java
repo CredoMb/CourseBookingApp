@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "students")
 public class Student {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public int student_id;
 
+    //
     @ColumnInfo(name = "username")
     public String userName;
 
@@ -18,10 +19,16 @@ public class Student {
     @ColumnInfo(name = "name")
     public String name_;
 
+    //Default constructor
+    public Student(){}
+
+    // Constructor with arguments
     public Student(String userName,String passWord, String name_){
         this.userName = userName;
         this.passWord = passWord;
         this.name_ = name_;
     }
+
+
 
 }

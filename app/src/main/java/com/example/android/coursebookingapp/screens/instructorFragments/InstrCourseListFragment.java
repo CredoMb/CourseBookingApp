@@ -65,7 +65,6 @@ public class InstrCourseListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         // return inflater;
-        //
         InstrCourseListFragmentBinding binding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.instr_course_list_fragment,
@@ -139,13 +138,11 @@ public class InstrCourseListFragment extends Fragment {
             if(!allCourse.isEmpty()){
                 for(int i=0; i<allCourse.size();i++){
                     currCourse = allCourse.get(i);
-
                     if(currCourse.teacher_id == currentInstructor_.id) {
                         teachingText = AppUtils.TEACHING_TEXT;
                     }else{
                         teachingText = "";
                     }
-
                     courseStringList.add(currCourse.courseName + " | "+currCourse.courseCode + " "+teachingText);
                     // What to do now ?
                     // I don't know

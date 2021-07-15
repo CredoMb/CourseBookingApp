@@ -46,9 +46,19 @@ public interface CourseDAO {
             " code LIKE :courseInfo LIMIT 1")
     Course findByCodeOrName(String courseInfo);
 
+    //
+    @Query("SELECT * FROM course WHERE name LIKE :info OR " +
+            " code LIKE :info OR day1 LIKE :info OR day2 LIKE :info")
+    List<Course> findByAnyThing(String info);
+
     @Query("DELETE FROM course WHERE name = :courseName AND "+
     " code = :courseCode")
     int delete(String courseName,String courseCode);
+
+    // Try to find by day and hour
+    @Query("SELECT * FROM course WHERE day1 LIKE :day AND hour1 LIKE :hour " +
+            "OR day2 LIKE :day AND hour2 LIKE :hour")
+    List<Course> findCoursesByDayAndHour(String day,String hour);
 
     /*@Delete(entity = Course.class)
     int delete(Course course);

@@ -7,11 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.example.android.coursebookingapp.screens.instructorFragments.InstrCourseListFragment">
-
+        tools:context="com.example.android.coursebookingapp.screens.studentFragments.StudentCourseListFragment">
 
         <ListView
-            android:id="@+id/list_view"
+            android:id="@+id/course_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
@@ -48,12 +47,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="roboto"
-                    android:text="It's a bit lonely here"
+                    android:text="No course to show"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/empty_state_subtitle"
                     android:layout_width="match_parent"
@@ -61,7 +59,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="roboto"
                     android:paddingTop="4dp"
-                    android:text="Get started by adding a course"
+                    android:text="Try to add some courses"
                     android:textAlignment="center"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="@android:color/darker_gray" />

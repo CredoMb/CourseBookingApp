@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -29,8 +30,6 @@ public class AdminActivity extends AppCompatActivity {
     }
     // There should be a logout thing!
     //
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.admin_menu,menu);
@@ -41,12 +40,18 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.logoutMenuButton){
-            int nbF =
             fm.getBackStackEntryCount();
+
+            int nbF = fm.getFragments().size();
+
+            //int f = 0;
             for(int i =0; i<nbF;i++) {
+               // f++;
                 fm.popBackStack();
             }
-            Intent intent = new Intent(this, MainActivity.class);
+            //Toast.makeText(this,String.valueOf(f),Toast.LENGTH_LONG).show();
+
+           Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
         }

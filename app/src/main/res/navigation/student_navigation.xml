@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/student_navigation"
+    app:startDestination="@id/studentCourseListFragment">
+
+    <fragment
+        android:id="@+id/studentCourseListFragment"
+        android:name="com.example.android.coursebookingapp.screens.studentFragments.StudentCourseListFragment"
+        android:label="StudentCourseListFragment" >
+        <action
+            android:id="@+id/action_studentCourseListFragment_to_studentCourseDetailFragment"
+            app:destination="@id/studentCourseDetailFragment" />
+        <action
+            android:id="@+id/action_studentCourseListFragment_to_studentCourseSearchFragment"
+            app:destination="@id/studentCourseSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentCourseDetailFragment"
+        android:name="com.example.android.coursebookingapp.screens.studentFragments.StudentCourseDetailFragment"
+        android:label="student_course_detail_fragment"
+        tools:layout="@layout/student_course_detail_fragment" >
+        <action
+            android:id="@+id/action_studentCourseDetailFragment_to_studentCourseListFragment"
+            app:destination="@id/studentCourseListFragment" />
+
+        <argument
+            android:name="courseFullName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+
+        <argument
+            android:name="studentName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+
+        <argument
+            android:name="isTaking"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/studentCourseSearchFragment"
+        android:name="com.example.android.coursebookingapp.screens.studentFragments.StudentCourseSearchFragment"
+        android:label="student_course_search_fragment"
+        tools:layout="@layout/student_course_search_fragment" >
+        <action
+            android:id="@+id/action_studentCourseSearchFragment_to_studentCourseListFragment"
+            app:destination="@id/studentCourseListFragment" />
+        <argument
+            android:name="studentName"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_studentCourseSearchFragment_to_studentCourseDetailFragment"
+            app:destination="@id/studentCourseDetailFragment" />
+    </fragment>
+</navigation>

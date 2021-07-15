@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Course {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public int course_id;
 
     @ColumnInfo(name = "name")
     @NonNull
@@ -54,7 +54,6 @@ public class Course {
     public String day2;
     @ColumnInfo(name = "hour2")
     public String hour2;
-
 
     @ColumnInfo(name = "capacity")
     public int capacity;
