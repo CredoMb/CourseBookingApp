@@ -156,11 +156,11 @@ public class StudentCourseSearchFragment extends Fragment {
 
                     for(int j=0; j<studentWithCourse.size();j++){
 
-                        if(studentWithCourse.get(i).student.name_.equals(currStudent.name_)){
+                        if(studentWithCourse.get(j).student.name_.equals(currStudent.name_)){
 
                             //
                             takingText="";
-                            if(courseFound(studentWithCourse.get(i).courses, currCourse)){
+                            if(courseFound(studentWithCourse.get(j).courses, currCourse)){
                                 takingText = " "+AppUtils.TAKING_TEXT;
                                 Log.i("Search","Testage "+currCourse.courseName);
                             }else {

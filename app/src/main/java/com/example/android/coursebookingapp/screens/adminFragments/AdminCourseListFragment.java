@@ -33,6 +33,7 @@ public class AdminCourseListFragment extends Fragment {
     private String courseName_;
     private String courseCode_;
 
+    // I can be no hater
     private ArrayList<String> courseArrList_;
     private CourseBookingDataBase db;
     private ArrayAdapter<String> adapter;

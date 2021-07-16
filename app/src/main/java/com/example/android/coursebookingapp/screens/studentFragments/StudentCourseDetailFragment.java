@@ -133,7 +133,7 @@ public class StudentCourseDetailFragment extends Fragment {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*currentCourse_.courseName = binding.editCourseName.getText().toString();
+                currentCourse_.courseName = binding.editCourseName.getText().toString();
                 currentCourse_.courseCode = binding.editCourseCode.getText().toString();
 
                 // The teacher decided to teach the course
@@ -151,7 +151,7 @@ public class StudentCourseDetailFragment extends Fragment {
                 // Take the capacity and change it into an int
                 currentCourse_.capacity = !(binding.editCapacity.getText().toString().isEmpty())
                         ?Integer.valueOf(binding.editCapacity.getText().toString().trim()) :0;
-                */
+
 
                 SaveCourseTask saveCourseTask = new SaveCourseTask();
                 saveCourseTask.execute();
@@ -240,6 +240,7 @@ public class StudentCourseDetailFragment extends Fragment {
         @Override
         protected Integer doInBackground(Integer... integers) {
 
+            //Log.i("Ea nini ko, sia", " kende kuna");
             loggedstudent_ = studentDAO.findByName(loggedstudentName_.trim());
             currentCourse_ = courseDAO.findByName(courseName_.trim());
 
@@ -261,8 +262,10 @@ public class StudentCourseDetailFragment extends Fragment {
             String hour1 = binding.editCourseHour1.getText().toString().trim();
             String hour2 = binding.editCourseHour2.getText().toString().trim();
 
+            /*
             List<Course> firstList = courseDAO.findCoursesByDayAndHour(day1,hour1);
             List<Course> secList = courseDAO.findCoursesByDayAndHour(day2,hour2);
+            */
 
             if(coursesOfStu.isEmpty()){
                 hasConflict = false;
@@ -273,10 +276,20 @@ public class StudentCourseDetailFragment extends Fragment {
                     //
                     tempCourse = coursesOfStu.get(i);
 
-                    if(courseDAO.findCoursesByDayAndHour(tempCourse.day1,tempCourse.hour1).size() > 1
+                    if(((tempCourse.day1.equals(day1) && tempCourse.hour1.equals(hour1))
+                       || (tempCourse.day2.equals(day1) && tempCourse.hour2.equals(hour1))
+                       )
+                        || ((tempCourse.day1.equals(day2) && tempCourse.hour1.equals(hour2))
+                            || (tempCourse.day2.equals(day2) && tempCourse.hour2.equals(hour2))
+                           )
+                    ){
+                        hasConflict = true;
+                        break;
+                    }
+                    /*if(courseDAO.findCoursesByDayAndHour(tempCourse.day1,tempCourse.hour1).size() > 1
                       || courseDAO.findCoursesByDayAndHour(tempCourse.day2,tempCourse.hour2).size() > 1){
                         hasConflict = true;
-                    }
+                    }*/
                 }
             }
 
@@ -288,7 +301,6 @@ public class StudentCourseDetailFragment extends Fragment {
             }else{
                 hasConflict = false;
             }*/
-
 
             // studentWithCourse.get(i).student.name_
             /*for(int i = 0; i<studentWithCourse.size();i++){
@@ -308,7 +320,8 @@ public class StudentCourseDetailFragment extends Fragment {
             }else if(!isTaking_){
                 modif = studentDAO.deleteStudentCourseCrossRef(loggedstudent_.student_id,currentCourse_.course_id);
             }
-            // The problem is how to remove a many relation
+
+            //The problem is how to remove a many relation
 
             return modif;
         }
@@ -320,15 +333,23 @@ public class StudentCourseDetailFragment extends Fragment {
                 Toast.makeText(getContext(),"Modifications saved successfully",Toast.LENGTH_LONG).show();
             }
             There is a conflict and he's not taking
+
+            What to do now?
+            || (hasConflict && !isTaking_)
             */
-            
-            if((!hasConflict && isTaking_) || !isTaking_) {
+            Log.i("Ea nini ko, sia hasc ",String.valueOf(hasConflict));
+            Log.i("Ea nini ko, sia isTak  ",String.valueOf(isTaking_));
+
+            if((!hasConflict && isTaking_) || !isTaking_ ) {
                 // There's a conflict with ...
+
                 NavDirections direction = StudentCourseDetailFragmentDirections.actionStudentCourseDetailFragmentToStudentCourseListFragment();
                 NavHostFragment.findNavController(getParentFragment()).navigate(direction);
             }else if(hasConflict && isTaking_){
                 Toast.makeText(getContext(),"Sorry, there's a time conflict ",Toast.LENGTH_LONG).show();
-            }
+            }//else{
+
+            ///}
             super.onPostExecute(modif);
         }
     }

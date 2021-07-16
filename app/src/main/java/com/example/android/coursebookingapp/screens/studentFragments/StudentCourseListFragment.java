@@ -55,7 +55,7 @@ public class StudentCourseListFragment extends Fragment {
     private InstructorDAO instructorDAO;
     private StudentDAO studentDAO;
 
-    //
+    // Klarissa
     private String courseName_;
     private String courseCode_;
 
@@ -83,7 +83,7 @@ public class StudentCourseListFragment extends Fragment {
                 container,
                 false);
 
-        // get the intent extra from
+        // Get the intent extra from
         studentName_ = getActivity().getIntent().getStringExtra(AppUtils.STUDENT_NAME_EXTRA).trim();
 
         db = Room.databaseBuilder(getContext(),
